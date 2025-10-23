@@ -535,6 +535,7 @@ function calcStart() {
             bombPrime1 = false
             bombPrime2 = false
             document.getElementById("bomb").classList.remove("btn-secondary")
+            document.getElementById("bomb").classList.add("btn-danger")
         }
     }
 }
