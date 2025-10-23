@@ -247,6 +247,10 @@ async function input3(pokeInput, pokeInfo) {
     document.getElementById("ul3").appendChild(node3);
 }
 
+
+var bombPrime1 = false;
+var bombPrime2 = false;
+var armed = 0;
 function calcStart() {
     //Variables
     const inputCalc1Raw = document.getElementById("input-calc-1");
@@ -255,6 +259,44 @@ function calcStart() {
     const nodeCalc = document.createElement("li");
     const regex = /^[+-]?[0-9]+\.?[0-9]*$/;
     const bypassRegex = /^\s+$/
+    let bombPrimeing1 = false;
+    let bombPrimeing2 = false;
+    let bombPrimingFail = false;
+    let textNodeCalc;
+    if (inputCalc1Raw.value == "Arm-Bomb-1" && bombPrime1 == false && primed == false) {
+        bombPrimeing1 = true
+        inputCalc1Raw.value = ""
+        inputCalc2Raw.value = ""
+    }
+    else if (inputCalc2Raw.value == "Initiate" && bombPrime2 == false && primed == false) {
+        bombPrimeing2 = true
+        inputCalc1Raw.value = ""
+        inputCalc2Raw.value = ""
+    }
+    else if (inputCalc1Raw.value == "Arm-Bomb-1" && bombPrime1 == true && primed == false) {
+        bombPrimingFail = true
+        textNodeCalc = document.createTextNode("Already entered SD-Key 1")
+        nodeCalc.appendChild(textNodeCalc);
+        document.getElementById("calc-result").appendChild(nodeCalc);
+        inputCalc1Raw.value = ""
+        inputCalc2Raw.value = ""
+    }
+    else if (inputCalc2Raw.value == "Initiate" && bombPrime2 == true && primed == false) {
+        bombPrimingFail = true
+        textNodeCalc = document.createTextNode("Already entered SD-Key 2")
+        nodeCalc.appendChild(textNodeCalc);
+        document.getElementById("calc-result").appendChild(nodeCalc);
+        inputCalc1Raw.value = ""
+        inputCalc2Raw.value = ""
+    }
+    else if ((inputCalc1Raw.value == "Arm-Bomb-1" || inputCalc2Raw.value == "Initiate") && primed == true) {
+        bombPrimingFail = true
+        textNodeCalc = document.createTextNode("Already armed")
+        nodeCalc.appendChild(textNodeCalc);
+        document.getElementById("calc-result").appendChild(nodeCalc);
+        inputCalc1Raw.value = ""
+        inputCalc2Raw.value = ""
+    }
     // Root check
     if (inputCalcOp.value == "√") {
         if (inputCalc2Raw.value == "" || bypassRegex.test(inputCalc2Raw.value)) {
@@ -269,188 +311,216 @@ function calcStart() {
     const inputCalc2 = parseFloat(inputCalc2Raw.value)
     let error = false
     let result;
-    let textNodeCalc;
 
-    if (regex.test(inputCalc1Raw.value) && regex.test(inputCalc2Raw.value)) {
-        if (inputCalcOp.value == "+") {
-            result = inputCalc1 + inputCalc2
-        }
-        else if (inputCalcOp.value == "-") {
-            result = inputCalc1 - inputCalc2
-        }
-        else if (inputCalcOp.value == "*") {
-            result = inputCalc1 * inputCalc2
-        }
-        else if (inputCalcOp.value == "/") {
-            if (inputCalc2 != 0) {
-                result = inputCalc1 / inputCalc2
+    if (bombPrimeing1 == false && bombPrimeing2 == false && bombPrimingFail == false) {
+        if (regex.test(inputCalc1Raw.value) && regex.test(inputCalc2Raw.value)) {
+            if (inputCalcOp.value == "+") {
+                result = inputCalc1 + inputCalc2
             }
-            else {
-                console.log(`Error: Can't divide by 0`)
-                console.log(`Input: ${inputCalc1} / 0`)
-                error = true
-                inputCalc2Raw.value = ""
+            else if (inputCalcOp.value == "-") {
+                result = inputCalc1 - inputCalc2
             }
-        }
-        else if (inputCalcOp.value == "%") {
-            if (inputCalc2 != 0) {
-                result = inputCalc1 % inputCalc2
+            else if (inputCalcOp.value == "*") {
+                result = inputCalc1 * inputCalc2
             }
-            else {
-                console.log(`Error: Can't calculate remainder with 0`)
-                console.log(`Input: ${inputCalc1} % 0`)
-                error = true
-                inputCalc2Raw.value = ""
-            }
-        }
-        else if (inputCalcOp.value == "^") {
-            result = Math.pow(inputCalc1, inputCalc2)
-        }
-        else if (inputCalcOp.value == "√") {
-            if (inputCalc2 > 0 && inputCalc1 >= 0) {
-                result = Math.pow(inputCalc1, 1 / inputCalc2)
-            }
-            else if (inputCalc2 > 0 || inputCalc1 >= 0) {
-                if (inputCalc1 >= 0) {
-                    if (inputCalc2 == 0) {
-                        console.log(`Error: Can't root with index 0`)
-                        console.log(`Input: 0√ ${inputCalc1}`)
-                        error = true
-                        inputCalc2Raw.value = ""
-                    }
-                    else if (inputCalc2 < 0) {
-                        console.log(`Error: Can't root with negative index`)
-                        console.log(`Input: ${inputCalc2}√ ${inputCalc1}`)
-                        error = true
-                        inputCalc2Raw.value = ""
-                    }
-                    else {
-                        console.log("Unexpected Error at root index")
-                        console.log(`First input: ${inputCalc1}`)
-                        console.log(`Second input: ${inputCalc2}`)
-                        inputCalc1Raw.value = ""
-                        inputCalc2Raw.value = ""
-                        error = true
-                    }
-                }
-                else if (inputCalc2 > 0) {
-                    if (inputCalc1 < 0) {
-                        console.log(`Error: Can't root with negative radicand`)
-                        console.log(`Input: ${inputCalc2}√ ${inputCalc1}`)
-                        error = true
-                        inputCalc1Raw.value = ""
-                    }
-                    else {
-                        console.log("Unexpected Error at root radicand")
-                        console.log(`First input: ${inputCalc1}`)
-                        console.log(`Second input: ${inputCalc2}`)
-                        inputCalc1Raw.value = ""
-                        inputCalc2Raw.value = ""
-                        error = true
-                    }
-
+            else if (inputCalcOp.value == "/") {
+                if (inputCalc2 != 0) {
+                    result = inputCalc1 / inputCalc2
                 }
                 else {
-                    console.log("Unexpected Error at root error detection")
-                    console.log(`First input: ${inputCalc1}`)
-                    console.log(`Second input: ${inputCalc2}`)
+                    console.log(`Error: Can't divide by 0`)
+                    console.log(`Input: ${inputCalc1} / 0`)
+                    error = true
+                    inputCalc2Raw.value = ""
+                }
+            }
+            else if (inputCalcOp.value == "%") {
+                if (inputCalc2 != 0) {
+                    result = inputCalc1 % inputCalc2
+                }
+                else {
+                    console.log(`Error: Can't calculate remainder with 0`)
+                    console.log(`Input: ${inputCalc1} % 0`)
+                    error = true
+                    inputCalc2Raw.value = ""
+                }
+            }
+            else if (inputCalcOp.value == "^") {
+                result = Math.pow(inputCalc1, inputCalc2)
+            }
+            else if (inputCalcOp.value == "√") {
+                if (inputCalc2 > 0 && inputCalc1 >= 0) {
+                    result = Math.pow(inputCalc1, 1 / inputCalc2)
+                }
+                else if (inputCalc2 > 0 || inputCalc1 >= 0) {
+                    if (inputCalc1 >= 0) {
+                        if (inputCalc2 == 0) {
+                            console.log(`Error: Can't root with index 0`)
+                            console.log(`Input: 0√ ${inputCalc1}`)
+                            error = true
+                            inputCalc2Raw.value = ""
+                        }
+                        else if (inputCalc2 < 0) {
+                            console.log(`Error: Can't root with negative index`)
+                            console.log(`Input: ${inputCalc2}√ ${inputCalc1}`)
+                            error = true
+                            inputCalc2Raw.value = ""
+                        }
+                        else {
+                            console.log("Unexpected Error at root index")
+                            console.log(`First input: ${inputCalc1}`)
+                            console.log(`Second input: ${inputCalc2}`)
+                            inputCalc1Raw.value = ""
+                            inputCalc2Raw.value = ""
+                            error = true
+                        }
+                    }
+                    else if (inputCalc2 > 0) {
+                        if (inputCalc1 < 0) {
+                            console.log(`Error: Can't root with negative radicand`)
+                            console.log(`Input: ${inputCalc2}√ ${inputCalc1}`)
+                            error = true
+                            inputCalc1Raw.value = ""
+                        }
+                        else {
+                            console.log("Unexpected Error at root radicand")
+                            console.log(`First input: ${inputCalc1}`)
+                            console.log(`Second input: ${inputCalc2}`)
+                            inputCalc1Raw.value = ""
+                            inputCalc2Raw.value = ""
+                            error = true
+                        }
+
+                    }
+                    else {
+                        console.log("Unexpected Error at root error detection")
+                        console.log(`First input: ${inputCalc1}`)
+                        console.log(`Second input: ${inputCalc2}`)
+                        inputCalc1Raw.value = ""
+                        inputCalc2Raw.value = ""
+                        error = true
+                    }
+                }
+                else {
+                    console.log(`Error: Both values invalid`)
+                    console.log(`Input: ${inputCalc2}√ ${inputCalc1}`)
+                    error = true
                     inputCalc1Raw.value = ""
                     inputCalc2Raw.value = ""
+                }
+            }
+            else if (inputCalcOp.value == "lt=gt") {
+                if (inputCalc1 < inputCalc2) {
+                    result = `${inputCalc1} < ${inputCalc2}`
+                }
+                else if (inputCalc1 == inputCalc2) {
+                    result = `${inputCalc1} = ${inputCalc2}`
+                }
+                else if (inputCalc1 > inputCalc2) {
+                    result = `${inputCalc1} > ${inputCalc2}`
+                }
+                else {
+                    console.log(`Error: Comparing failed`)
+                    console.log(`First input: ${inputCalc1}`)
+                    console.log(`Second input: ${inputCalc2}`)
                     error = true
+                    inputCalc1Raw.value = ""
+                    inputCalc2Raw.value = ""
                 }
             }
             else {
-                console.log(`Error: Both values invalid`)
-                console.log(`Input: ${inputCalc2}√ ${inputCalc1}`)
+                console.log(`Error: Invalid Operator`)
+                console.log(`Operator: ${inputCalcOp.value}`)
                 error = true
-                inputCalc1Raw.value = ""
-                inputCalc2Raw.value = ""
             }
         }
-        else if (inputCalcOp.value == "lt=gt") {
-            if (inputCalc1 < inputCalc2) {
-                result = `${inputCalc1} < ${inputCalc2}`
+        else if (regex.test(inputCalc1Raw.value) || regex.test(inputCalc2Raw.value)) {
+            if (regex.test(inputCalc2Raw.value)) {
+                console.log(`Error: First Value is NOT a valid number`)
+                console.log(`First input: ${inputCalc1Raw.value}`)
+                inputCalc1Raw.value = ""
+                error = true
             }
-            else if (inputCalc1 == inputCalc2) {
-                result = `${inputCalc1} = ${inputCalc2}`
-            }
-            else if (inputCalc1 > inputCalc2) {
-                result = `${inputCalc1} > ${inputCalc2}`
+            else if (regex.test(inputCalc1Raw.value)) {
+                console.log(`Error: Second Value is NOT a valid number`)
+                console.log(`Second input: ${inputCalc2Raw.value}`)
+                inputCalc2Raw.value = ""
+                error = true
             }
             else {
-                console.log(`Error: Comparing failed`)
-                console.log(`First input: ${inputCalc1}`)
-                console.log(`Second input: ${inputCalc2}`)
-                error = true
+                console.log("Unexpected Error at regex else-else")
+                console.log(`First input: ${inputCalc1Raw.value}`)
+                console.log(`Second input: ${inputCalc2Raw.value}`)
                 inputCalc1Raw.value = ""
                 inputCalc2Raw.value = ""
+                error = true
             }
         }
         else {
-            console.log(`Error: Invalid Operator`)
-            console.log(`Operator: ${inputCalcOp.value}`)
-            error = true
-        }
-    }
-    else if (regex.test(inputCalc1Raw.value) || regex.test(inputCalc2Raw.value)) {
-        if (regex.test(inputCalc2Raw.value)) {
-            console.log(`Error: First Value is NOT a valid number`)
-            console.log(`First input: ${inputCalc1Raw.value}`)
-            inputCalc1Raw.value = ""
-            error = true
-        }
-        else if (regex.test(inputCalc1Raw.value)) {
-            console.log(`Error: Second Value is NOT a valid number`)
-            console.log(`Second input: ${inputCalc2Raw.value}`)
-            inputCalc2Raw.value = ""
-            error = true
-        }
-        else {
-            console.log("Unexpected Error at regex else-else")
+            console.log(`Error: Both Values are NOT valid numbers`)
             console.log(`First input: ${inputCalc1Raw.value}`)
             console.log(`Second input: ${inputCalc2Raw.value}`)
             inputCalc1Raw.value = ""
             inputCalc2Raw.value = ""
             error = true
         }
-    }
-    else {
-        console.log(`Error: Both Values are NOT valid numbers`)
-        console.log(`First input: ${inputCalc1Raw.value}`)
-        console.log(`Second input: ${inputCalc2Raw.value}`)
-        inputCalc1Raw.value = ""
-        inputCalc2Raw.value = ""
-        error = true
-    }
 
-    if (error == false) {
-        if (calcCheck1 == false) {
-            inputCalc1Raw.value = ""
-        }
-        else if (calcCheck1 == true) { }
-        else {
-            console.log(`Error: Checkbox 1 invalid output`)
-            console.log(`Output: ${calcCheck1}`)
-            inputCalc1Raw.value = ""
-            error = true
+        if (error == false) {
+            if (calcCheck1 == false) {
+                inputCalc1Raw.value = ""
+            }
+            else if (calcCheck1 == true) { }
+            else {
+                console.log(`Error: Checkbox 1 invalid output`)
+                console.log(`Output: ${calcCheck1}`)
+                inputCalc1Raw.value = ""
+                error = true
+            }
+
+            if (calcCheck2 == false) {
+                inputCalc2Raw.value = ""
+            }
+            else if (calcCheck2 == true) { }
+            else {
+                console.log(`Error: Checkbox 2 invalid output`)
+                console.log(`Output: ${calcCheck2}`)
+                inputCalc2Raw.value = ""
+                error = true
+            }
         }
 
-        if (calcCheck2 == false) {
-            inputCalc2Raw.value = ""
-        }
-        else if (calcCheck2 == true) { }
-        else {
-            console.log(`Error: Checkbox 2 invalid output`)
-            console.log(`Output: ${calcCheck2}`)
-            inputCalc2Raw.value = ""
-            error = true
+        if (error == false) {
+            textNodeCalc = document.createTextNode(result)
+            nodeCalc.appendChild(textNodeCalc);
+            document.getElementById("calc-result").appendChild(nodeCalc);
         }
     }
+    else if (bombPrimeing1 == true && bombPrime1 == false) {
+        bombPrime1 = true
 
-    if (error == false) {
-        textNodeCalc = document.createTextNode(result)
+        textNodeCalc = document.createTextNode("SD-Key 1 is correct!")
         nodeCalc.appendChild(textNodeCalc);
         document.getElementById("calc-result").appendChild(nodeCalc);
+    }
+    else if (bombPrimeing2 == true && bombPrime2 == false) {
+        bombPrime2 = true
+
+        textNodeCalc = document.createTextNode("SD-Key 2 is correct!")
+        nodeCalc.appendChild(textNodeCalc);
+        document.getElementById("calc-result").appendChild(nodeCalc);
+    }
+    if (bombPrime1 == true && bombPrime2 == true && primed == 0) {
+        setTimeout(priming, 1000)
+        function priming() {
+            primed = 1
+            calcReset()
+            const textNodeCalcBomb = document.createTextNode("Bomb has been primed")
+            let nodeCalcBomb = document.createElement("li")
+            nodeCalcBomb.appendChild(textNodeCalcBomb);
+            document.getElementById("calc-result").appendChild(nodeCalcBomb);
+            bombPrime1 = false
+            bombPrime2 = false
+        }
     }
 }
 
@@ -506,52 +576,56 @@ setInterval(function count() {
     document.getElementById("lifetime").innerHTML = time
 }, 1000)
 
+let number = 1
+var primed = 0
 function bomb() {
-    let number = 1
-    while (true) {
-        document.getElementById("inf-num").appendChild(document.createTextNode(number))
+    while (primed == 1) {
+        document.getElementById("inf-num").appendChild(document.createElement("li")).appendChild(document.createTextNode(number))
         number++
     }
 }
 
 var bombInt = 0
-var armed = 0
 setInterval(function bombWarning() {
-    if (bombInt == 0) {
-        bombInt = 1
-        document.getElementById("bomb").classList.add("btn-warning")
-        document.getElementById("bomb").classList.remove("btn-danger")
-        if (armed == 1) {
-            rearm()
+    if (primed == 1) {
+        if (bombInt == 0) {
+            bombInt = 1
+            document.getElementById("bomb").classList.add("btn-warning")
+            document.getElementById("bomb").classList.remove("btn-danger")
+            if (armed == 1) {
+                rearm()
+            }
         }
-    }
-    else {
-        bombInt = 0
-        document.getElementById("bomb").classList.add("btn-danger")
-        document.getElementById("bomb").classList.remove("btn-warning")
-        if (armed == 1) {
-            rearm()
+        else {
+            bombInt = 0
+            document.getElementById("bomb").classList.add("btn-danger")
+            document.getElementById("bomb").classList.remove("btn-warning")
+            if (armed == 1) {
+                rearm()
+            }
         }
     }
 }, 500)
 
 function arm() {
     armed = 1
-    if (bombInt == 1) {
+    if (bombInt == 1 && primed == 1) {
         document.getElementById("bomb").style.boxShadow = "0 0 150px 150px #900C"
     }
-    else {
+    else if (primed == 1) {
         document.getElementById("bomb").style.boxShadow = "0 0 150px 150px #A90C"
     }
 }
 
 function rearm() {
-    //setTimeout hinzufügen
-    if (bombInt == 1) {
-        document.getElementById("bomb").style.boxShadow = "0 0 150px 150px #900C"
-    }
-    else {
-        document.getElementById("bomb").style.boxShadow = "0 0 150px 150px #A90C"
+    setTimeout(rearmInner, 100)
+    function rearmInner() {
+        if (bombInt == 1) {
+            document.getElementById("bomb").style.boxShadow = "0 0 150px 150px #900C"
+        }
+        else {
+            document.getElementById("bomb").style.boxShadow = "0 0 150px 150px #A90C"
+        }
     }
 }
 
