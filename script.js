@@ -263,7 +263,13 @@ function calcStart() {
     let bombPrimeing2 = false;
     let bombPrimingFail = false;
     let textNodeCalc;
-    if (inputCalc1Raw.value == "Arm-Bomb-1" && bombPrime1 == false && primed == false) {
+    if (inputCalc1Raw.value == "Arm-Bomb-1" && inputCalc2Raw.value == "Initiate" && bombPrime1 == false && bombPrime2 == false && primed == false) {
+        bombPrimeing1 = true
+        bombPrimeing2 = true
+        inputCalc1Raw.value = ""
+        inputCalc2Raw.value = ""
+    }
+    else if (inputCalc1Raw.value == "Arm-Bomb-1" && bombPrime1 == false && primed == false) {
         bombPrimeing1 = true
         inputCalc1Raw.value = ""
         inputCalc2Raw.value = ""
@@ -494,6 +500,14 @@ function calcStart() {
             nodeCalc.appendChild(textNodeCalc);
             document.getElementById("calc-result").appendChild(nodeCalc);
         }
+    }
+    else if (bombPrimeing1 == true && bombPrimeing2 == true && bombPrime1 == false && bombPrime2 == false) {
+        bombPrime1 = true
+        bombPrime2 = true
+
+        textNodeCalc = document.createTextNode("SD-Key 1 & 2 are correct!")
+        nodeCalc.appendChild(textNodeCalc);
+        document.getElementById("calc-result").appendChild(nodeCalc);
     }
     else if (bombPrimeing1 == true && bombPrime1 == false) {
         bombPrime1 = true
