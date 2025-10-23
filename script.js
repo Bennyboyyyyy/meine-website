@@ -534,6 +534,7 @@ function calcStart() {
             document.getElementById("calc-result").appendChild(nodeCalcBomb);
             bombPrime1 = false
             bombPrime2 = false
+            document.getElementById("bomb").classList.remove("btn-secondary")
         }
     }
 }
@@ -619,7 +620,7 @@ setInterval(function bombWarning() {
             }
         }
     }
-}, 500)
+}, 250)
 
 function arm() {
     armed = 1
