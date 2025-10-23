@@ -624,21 +624,21 @@ setInterval(function bombWarning() {
 function arm() {
     armed = 1
     if (bombInt == 1 && primed == 1) {
-        document.getElementById("bomb").style.boxShadow = "0 0 150px 150px #900C"
+        document.getElementById("bomb").style.boxShadow = "0 0 30px 15px #DC3545"
     }
     else if (primed == 1) {
-        document.getElementById("bomb").style.boxShadow = "0 0 150px 150px #A90C"
+        document.getElementById("bomb").style.boxShadow = "0 0 30px 15px #FFC107"
     }
 }
 
 function rearm() {
-    setTimeout(rearmInner, 100)
+    setTimeout(rearmInner, 50)
     function rearmInner() {
         if (bombInt == 1) {
-            document.getElementById("bomb").style.boxShadow = "0 0 150px 150px #900C"
+            document.getElementById("bomb").style.boxShadow = "0 0 30px 15px #DC3545"
         }
         else {
-            document.getElementById("bomb").style.boxShadow = "0 0 150px 150px #A90C"
+            document.getElementById("bomb").style.boxShadow = "0 0 30px 15px #FFC107"
         }
     }
 }
