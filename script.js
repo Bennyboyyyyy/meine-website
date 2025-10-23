@@ -504,4 +504,58 @@ setInterval(function count() {
         time = `${h}:${m}:${s}`
     }
     document.getElementById("lifetime").innerHTML = time
-},1000)
+}, 1000)
+
+function bomb() {
+    let number = 1
+    while (true) {
+        document.getElementById("inf-num").appendChild(document.createTextNode(number))
+        number++
+    }
+}
+
+var bombInt = 0
+var armed = 0
+setInterval(function bombWarning() {
+    if (bombInt == 0) {
+        bombInt = 1
+        document.getElementById("bomb").classList.add("btn-warning")
+        document.getElementById("bomb").classList.remove("btn-danger")
+        if (armed == 1) {
+            rearm()
+        }
+    }
+    else {
+        bombInt = 0
+        document.getElementById("bomb").classList.add("btn-danger")
+        document.getElementById("bomb").classList.remove("btn-warning")
+        if (armed == 1) {
+            rearm()
+        }
+    }
+}, 500)
+
+function arm() {
+    armed = 1
+    if (bombInt == 1) {
+        document.getElementById("bomb").style.boxShadow = "0 0 150px 150px #900C"
+    }
+    else {
+        document.getElementById("bomb").style.boxShadow = "0 0 150px 150px #A90C"
+    }
+}
+
+function rearm() {
+    //setTimeout hinzufügen
+    if (bombInt == 1) {
+        document.getElementById("bomb").style.boxShadow = "0 0 150px 150px #900C"
+    }
+    else {
+        document.getElementById("bomb").style.boxShadow = "0 0 150px 150px #A90C"
+    }
+}
+
+function disarm() {
+    armed = 0
+    document.getElementById("bomb").style.boxShadow = "0 0 0 0 #FFFF"
+}

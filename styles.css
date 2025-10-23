@@ -1,89 +1,89 @@
 :root {
-    --primary-color: #F2A359;
-    --secondary-color: #cc894b;
+  --primary-color: #F2A359;
+  --secondary-color: #cc894b;
 }
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .wbi {
-    padding: 0px;
-    font-size: 3rem;
-    color: var(--primary-color)
+  padding: 0px;
+  font-size: 3rem;
+  color: var(--primary-color)
 }
 
 .wbi:hover {
-    color: var(--secondary-color);
+  color: var(--secondary-color);
 }
 
 .azubi {
-    padding: 0px;
-    font-size: 3rem;
-    color: var(--primary-color)
+  padding: 0px;
+  font-size: 3rem;
+  color: var(--primary-color)
 }
 
 .azubi:hover {
-    color: var(--secondary-color);
+  color: var(--secondary-color);
 }
 
 .txt {
-    margin-left: 128px;
-    padding: 0px;
-    font-size: 1.5rem;
+  margin-left: 128px;
+  padding: 0px;
+  font-size: 1.5rem;
 }
 
 header {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .ability {
-    display: flex;
-    justify-content: space-around;
-    font-size: 1.5rem;
+  display: flex;
+  justify-content: space-around;
+  font-size: 1.5rem;
 }
 
 p {
-    font-size: 2rem;
+  font-size: 2rem;
 }
 
 .imgp {
-    width: 200px;
-    height: 200px;
-    clip-path: circle(35%);
-    object-fit: cover;
-    object-position: 50% 20%;
-    zoom: 150%;
+  width: 200px;
+  height: 200px;
+  clip-path: circle(35%);
+  object-fit: cover;
+  object-position: 50% 20%;
+  zoom: 150%;
 }
 
 .size {
-    width: 200px;
-    height: auto;
+  width: 200px;
+  height: auto;
 }
 
 .size-2 {
-    width: 50%;
-    height: auto;
+  width: 50%;
+  height: auto;
 }
 
 .txt-center {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 h1 {
-    color: green;
+  color: green;
 }
 
 .lorem {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .imgc {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .topnav {
@@ -113,13 +113,13 @@ h1 {
 }
 
 .delete-button {
-    width: auto;
-    height: 24px;
+  width: auto;
+  height: 24px;
 }
 
 .flex-node {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .switch {
@@ -159,15 +159,15 @@ h1 {
   transition: .4s;
 }
 
-input:checked + .slider {
+input:checked+.slider {
   background-color: #2196F3;
 }
 
-input:focus + .slider {
+input:focus+.slider {
   box-shadow: 0 0 1px #2196F3;
 }
 
-input:checked + .slider:before {
+input:checked+.slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
@@ -179,4 +179,8 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+#bomb {
+  z-index: 100;
 }
