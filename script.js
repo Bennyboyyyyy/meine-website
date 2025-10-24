@@ -611,6 +611,9 @@ setInterval(function bombWarning() {
             if (armed == 1) {
                 rearm()
             }
+            else {
+                disarm()
+            }
         }
         else {
             bombInt = 0
@@ -618,6 +621,9 @@ setInterval(function bombWarning() {
             document.getElementById("bomb").classList.remove("btn-warning")
             if (armed == 1) {
                 rearm()
+            }
+            else {
+                disarm()
             }
         }
     }
