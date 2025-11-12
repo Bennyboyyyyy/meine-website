@@ -1,0 +1,25 @@
+<div class="p-4">
+  <p style="margin-top: 1rem;">Eingabe</p>
+  <form class="example-form dialog-flex" style="margin-top: 1rem;" [formGroup]="form">
+    <mat-form-field class="example-full-width">
+      <mat-label>Produkt Name</mat-label>
+      <input matInput placeholder="Kein Android" value="iPhone" formControlName="name">
+      @if (this.form.controls.name.invalid) {
+        <div class="alert alert-danger">
+          <p>Name ist ungültig</p>
+        </div>
+      }
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Produkt Beschreibung</mat-label>
+      <input matInput placeholder="Teuer" formControlName="desc">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Preis</mat-label>
+      <input matInput type="number" placeholder="MONEY MONEY MONEY" formControlName="price">
+    </mat-form-field>
+  </form>
+  <button matButton="outlined" (click)='send()'>Close</button>
+</div>

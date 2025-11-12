@@ -528,7 +528,7 @@ function calcStart() {
         function priming() {
             primed = 1
             calcReset()
-            const textNodeCalcBomb = document.createTextNode("Bomb has been primed")
+            const textNodeCalcBomb = document.createTextNode("Bomb has been primed!")
             let nodeCalcBomb = document.createElement("li")
             nodeCalcBomb.appendChild(textNodeCalcBomb);
             document.getElementById("calc-result").appendChild(nodeCalcBomb);
