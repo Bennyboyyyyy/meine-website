@@ -1,5 +1,89 @@
 .products {
     display: grid;
     gap: 1rem;
-    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+
+}
+
+.box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    height: 400px;
+    width: 400px;
+    border: 3px solid transparent;
+    border-radius: 12px;
+    background: linear-gradient(#282828, #000000) padding-box, linear-gradient(var(--angle),
+            #ff0000,
+            #ff8000,
+            #ffff00,
+            #80ff00,
+            #00ff00,
+            #00ff80,
+            #00ffff,
+            #0080ff,
+            #0000ff,
+            #8000ff,
+            #ff00ff,
+            #ff0080) border-box;
+    animation: 8s rotate linear infinite;
+}
+
+.err-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    height: 400px;
+    width: 400px;
+    border: 3px solid transparent;
+    border-radius: 12px;
+    background: linear-gradient(#282828, #000000) padding-box, linear-gradient(var(--angle),
+            #ff0000,
+            #000000) border-box;
+    animation: 8s rotate linear infinite;
+}
+
+.add-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    height: 400px;
+    width: 400px;
+    border: 3px solid transparent;
+    border-radius: 12px;
+    background: linear-gradient(#282828, #000000) padding-box, linear-gradient(var(--angle),
+            #00ffff,
+            #000000) border-box;
+    animation: 8s rotate linear infinite;
+
+    >.button-add {
+        height: inherit;
+        width: inherit;
+        border-radius: 0;
+        
+        span.plus-span {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 500px;
+            font-weight: 300;
+            height: 400px;
+            width: 400px;
+        }
+    }
+}
+
+@keyframes rotate {
+    to {
+        --angle: 360deg;
+    }
+}
+
+@property --angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
 }

@@ -5,8 +5,8 @@
       <mat-label>Produkt Name</mat-label>
       <input matInput placeholder="Kein Android" value="iPhone" formControlName="name">
       @if (this.form.controls.name.invalid) {
-        <div class="alert alert-danger">
-          <p>Name ist ungültig</p>
+        <div style="color: red;">
+          <p><b>Name ist ungültig</b></p>
         </div>
       }
     </mat-form-field>
@@ -14,12 +14,33 @@
     <mat-form-field class="example-full-width">
       <mat-label>Produkt Beschreibung</mat-label>
       <input matInput placeholder="Teuer" formControlName="desc">
+      @if (this.form.controls.desc.invalid) {
+        <div style="color: red;">
+          <p><b>Beschreibung ist ungültig</b></p>
+        </div>
+      }
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
       <mat-label>Preis</mat-label>
       <input matInput type="number" placeholder="MONEY MONEY MONEY" formControlName="price">
+      @if (this.form.controls.price.invalid) {
+        <div style="color: red;">
+          <p><b>Preis ist ungültig</b></p>
+        </div>
+      }
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Bild-URL</mat-label>
+      <input matInput placeholder="Picture" formControlName="image">
+      @if (this.form.controls.image.invalid) {
+        <div style="color: red;">
+          <p><b>Bild-URL ist ungültig</b></p>
+        </div>
+      }
     </mat-form-field>
   </form>
-  <button matButton="outlined" (click)='send()'>Close</button>
+  <button matButton="outlined" (click)='close()'>Close</button>
+  <button matButton="outlined" class="ml-1" (click)='send()'>Send</button>
 </div>
